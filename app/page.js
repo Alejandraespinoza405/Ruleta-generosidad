@@ -2,20 +2,7 @@
 
 import { useState } from "react";
 
-const SEGMENTS = [
-  { label: "Paga el café\nde alguien" },
-  { label: "Da un cumplido\nsincero" },
-  { label: "Dona ropa\nque no usas" },
-  { label: "Lleva flores\na alguien" },
-  { label: "Escribe una\ncarta de gratitud" },
-  { label: "Deja una\npropina extra" },
-  { label: "Ayuda a\nun vecino" },
-  { label: "Comparte\ntu almuerzo" },
-  { label: "Llama a quien\nextrañas" },
-  { label: "Dona a\nuna causa" },
-  { label: "Ofrece tu\nayuda hoy" },
-  { label: "Regala tu\nlibro favorito" },
-];
+const SEGMENTS = Array.from({ length: 12 });
 
 const COLORS = [
   "#C8D8C0",
@@ -154,13 +141,10 @@ export default function Home() {
 
     setWinner(randomIndex);
 
-    setAiMission(
-      fetchedMission ||
-        SEGMENTS[randomIndex].label.replace(
-          "\n",
-          " "
-        )
-    );
+setAiMission(
+  fetchedMission ||
+  "💜 Haz un pequeño acto de amabilidad hoy."
+);
 
     const newConfetti =
       generateRandomConfetti();
@@ -180,6 +164,17 @@ export default function Home() {
 
   return (
     <main className="generosity-page">
+  <video
+    className="background-video"
+    autoPlay
+    muted
+    loop
+    playsInline
+  >
+    <source src="/fondo-generosidad.mp4" type="video/mp4" />
+  </video>
+
+  <div className="background-overlay" />
 
       {/* FONDOS DECORATIVOS */}
 
@@ -307,88 +302,22 @@ export default function Home() {
               }}
             >
 
-              {SEGMENTS.map(
-                (seg, i) => {
+             {SEGMENTS.map((_, i) => (
+  <g key={i}>
+    <path
+      d={segmentPath(i)}
+      fill={COLORS[i]}
+    />
 
-                  const mid =
-                    i * SEG_ANGLE +
-                    SEG_ANGLE / 2;
-
-                  const textPos =
-                    polarToXY(
-                      mid,
-                      R * 0.62
-                    );
-
-                  let textRotation =
-                    mid - 90;
-
-                  if (
-                    mid > 90 &&
-                    mid < 270
-                  ) {
-                    textRotation += 180;
-                  }
-
-                  return (
-                    <g key={i}>
-
-                      <path
-                        d={segmentPath(i)}
-                        fill={COLORS[i]}
-                      />
-
-                      <path
-                        d={segmentPath(i)}
-                        fill="none"
-                        stroke="white"
-                        strokeWidth="2"
-                        opacity="0.7"
-                      />
-
-                      {seg.label
-                        .split("\n")
-                        .map(
-                          (
-                            line,
-                            li,
-                            arr
-                          ) => {
-
-                            const offset =
-                              (
-                                li -
-                                (arr.length -
-                                  1) /
-                                  2
-                              ) * 13;
-
-                            return (
-                              <text
-                                key={li}
-                                x={textPos.x}
-                                y={
-                                  textPos.y +
-                                  offset
-                                }
-                                textAnchor="middle"
-                                dominantBaseline="middle"
-                                fontSize="10.5"
-                                fontWeight="800"
-                                fill="#3d3450"
-                                fontFamily="Nunito, sans-serif"
-                                transform={`rotate(${textRotation}, ${textPos.x}, ${textPos.y})`}
-                              >
-                                {line}
-                              </text>
-                            );
-                          }
-                        )}
-
-                    </g>
-                  );
-                }
-              )}
+    <path
+      d={segmentPath(i)}
+      fill="none"
+      stroke="white"
+      strokeWidth="2"
+      opacity="0.7"
+    />
+  </g>
+))}
 
               <circle
                 cx={CX}
