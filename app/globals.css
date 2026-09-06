@@ -16,16 +16,12 @@
   padding: 24px 16px;
 
   position: relative;
+  z-index: 2;
+
 
   overflow-x: hidden;
 
-  background:
-    linear-gradient(
-      135deg,
-      #f0edf5 0%,
-      #e8edf2 50%,
-      #ede8f0 100%
-    );
+  background: transparent;
 }
 
 /* ================================= */
@@ -729,4 +725,20 @@
     font-size: 14px;
   }
 
+}
+.background-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.background-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.85);
+  z-index: 1;
+  pointer-events: none;
 }
